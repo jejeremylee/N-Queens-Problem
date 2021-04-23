@@ -51,12 +51,12 @@ def main():
 	if (N < 4):
 		label3.pack()
 
-	label3.after(3000 , lambda: label3.destroy())
+	label3.after(5000 , lambda: label3.destroy())
 
 	numOfTile = N*N
 	prepareSATFiles(N, numOfTile)
                 
-	if N <= 20:
+	if N <= 12:
 		if(presented == True):
 			presented = False
 			resetGUI(N)
@@ -67,6 +67,11 @@ def main():
 			
 	else:
 		displayNonGUI(N)
+
+		label4 = tk.Label(root, fg='red', text="Chess board too large, answer is printed on the terminal interface")
+		label4.config(font=('helvetica', 10))
+		label4.pack()
+		label4.after(10000 , lambda: label4.destroy())
 
 
 def replaceCNFHeader(string):
