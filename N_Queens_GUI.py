@@ -13,9 +13,10 @@ unicorn = tk.PhotoImage(file='images/unicorn_jose_32.png')
 
 master.tk.call('wm', 'iconphoto', master._w, queenIcon)
 
-def resetGUI():
-	master.withdraw()
-	master.deiconify()
+def resetGUI(N):
+    for label in master.grid_slaves():
+            label.grid_forget()
+    displayGUI(N)
 
 def displayGUI(N):
 

@@ -9,18 +9,17 @@ from tkinter import *
 # GUI Input
 root= tk.Tk()
 
-root.minsize(500,400)
+root.minsize(250,200)
 
 canvas1 = tk.Canvas(root,  relief = 'raised')
 canvas1.pack()
-canvas2 = tk.Canvas(root, relief = 'raised')
-canvas2.pack()
 
-label1 = tk.Label(root, text='N Queens Solver')
+
+label1 = tk.Label(root, text='N Queens Problem Solver')
 label1.config(font=('helvetica', 14))
 canvas1.create_window(200, 25, window=label1)
 
-label2 = tk.Label(root, text='Enter your chessboard size:')
+label2 = tk.Label(root, text='Enter your chessboard size (>= 4):')
 label2.config(font=('helvetica', 10))
 canvas1.create_window(200, 100, window=label2)
 
@@ -45,11 +44,14 @@ def main():
 	inputFile = open("input.cnf", mode='w')
 
 	N = int(entry1.get())
-	canvas2.delete("all")
-	
+
+	label3 = tk.Label(root, fg='red', text="UNSATISFIABLE, Can't create chess board with "+ str(N)+"x"+str(N)+" size")
+	label3.config(font=('helvetica', 10))
+
 	if (N < 4):
-		print("UNSATISFIABLE, Can't create chess board with "+ str(N)+"x"+str(N)+" size")
-		exit()
+		label3.pack()
+
+	label3.after(3000 , lambda: label3.destroy())
 
 	numOfTile = N*N
 	prepareSATFiles(N, numOfTile)
@@ -57,9 +59,7 @@ def main():
 	if N <= 20:
 		if(presented == True):
 			presented = False
-			print(str("masuk"))
-			resetGUI()
-
+			resetGUI(N)
 
 		else:
 			presented = True
