@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 
 master = tk.Tk()
-master.title("N Unicorns Problem with Minisat")
+master.title("N Queens Problem Solver with Minisat")
 
 lightTile = 'white'
 darkTile = 'black'
@@ -13,8 +13,11 @@ unicorn = tk.PhotoImage(file='images/unicorn_jose_32.png')
 
 master.tk.call('wm', 'iconphoto', master._w, queenIcon)
 
-def displayGUI(N):
+def resetGUI():
+	master.withdraw()
+	master.deiconify()
 
+def displayGUI(N):
 
 	with open('solution.sol', mode='r') as f:
 		content = f.read().splitlines()

@@ -1,16 +1,51 @@
-from math import ceil
-from N_Queens_GUI import displayGUI, displayNonGUI
 import sys, os
 import subprocess
+import tkinter as tk
 
+from math import ceil
+from N_Queens_GUI import displayGUI, displayNonGUI, resetGUI
+from tkinter import *
+
+# GUI Input
+root= tk.Tk()
+
+root.minsize(500,400)
+
+canvas1 = tk.Canvas(root,  relief = 'raised')
+canvas1.pack()
+canvas2 = tk.Canvas(root, relief = 'raised')
+canvas2.pack()
+
+label1 = tk.Label(root, text='N Queens Solver')
+label1.config(font=('helvetica', 14))
+canvas1.create_window(200, 25, window=label1)
+
+label2 = tk.Label(root, text='Enter your chessboard size:')
+label2.config(font=('helvetica', 10))
+canvas1.create_window(200, 100, window=label2)
+
+entry1 = tk.Entry (root) 
+canvas1.create_window(200, 140, window=entry1)
+
+
+presented = False
 inputFile = open("input.cnf", mode='w')
 clausesCounter = 0
 
+def initState():
+	global clausesCounter
+	open('input.cnf', 'w').close()
+	clausesCounter=0
 
 def main():
 	global inputFile
+	global presented
+	
+	initState()
+	inputFile = open("input.cnf", mode='w')
 
-	N = int(input("Please enter chess board size: "))
+	N = int(entry1.get())
+	canvas2.delete("all")
 	
 	if (N < 4):
 		print("UNSATISFIABLE, Can't create chess board with "+ str(N)+"x"+str(N)+" size")
@@ -20,7 +55,16 @@ def main():
 	prepareSATFiles(N, numOfTile)
                 
 	if N <= 20:
-		displayGUI(N)
+		if(presented == True):
+			presented = False
+			print(str("masuk"))
+			resetGUI()
+
+
+		else:
+			presented = True
+			displayGUI(N)
+			
 	else:
 		displayNonGUI(N)
 
@@ -136,4 +180,7 @@ def genLowerBoundDiagonalConstraints(N, numOfTile):
 			inputFile.write("-{0:d} -{1:d} 0\n".format(i, j))
 			clausesCounter+=1
 
-main()
+button1 = tk.Button(canvas1, text='Get Solution', command=main, bg='teal', fg='white', font=('helvetica', 9, 'bold'))
+canvas1.create_window(200, 180, window=button1)
+
+root.mainloop()
